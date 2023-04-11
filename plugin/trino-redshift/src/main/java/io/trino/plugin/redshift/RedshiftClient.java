@@ -311,14 +311,9 @@ public class RedshiftClient
 
     @Override
     public Optional<String> getTableComment(ResultSet resultSet)
+            throws SQLException
     {
-
-        try {
-            return Optional.ofNullable(emptyToNull(resultSet.getString("REMARKS")));
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return Optional.ofNullable(emptyToNull(resultSet.getString("REMARKS")));
     }
 
     @Override
@@ -347,7 +342,6 @@ public class RedshiftClient
                 quoted(remoteTableName),
                 varcharLiteral(comment.orElse("")));
     }
-
 
     @Override
     public Optional<JdbcExpression> implementAggregation(ConnectorSession session, AggregateFunction aggregate, Map<String, ColumnHandle> assignments)
